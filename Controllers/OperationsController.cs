@@ -130,18 +130,15 @@ namespace OPS_API.Controllers
                     Inventory = new List<EquipmentInventory>()
                 };
 
-                if (rand.Next(0, 1) == 1)
-                {
-                    operation.RequestedEquipment
-                        .ConvertAll(x => new EquipmentInventory
-                        {
-                            EquipmentRequest = x,
-                            Rescuer = rescuer
-                        })
-                        .Where(x => rand.Next(0, 1) == 1)
-                        .ToList()
-                        .ForEach(n => rescuer.Inventory.Add(n));
-                }
+                operation.RequestedEquipment
+                    .ConvertAll(x => new EquipmentInventory
+                    {
+                        EquipmentRequest = x,
+                        Rescuer = rescuer
+                    })
+                    .Where(x => rand.Next(0, 5) > 2)
+                    .ToList()
+                    .ForEach(n => rescuer.Inventory.Add(n));
 
                 await _opService.JoinAsync(opResult.Value.Id, rescuer);
             }

@@ -77,7 +77,7 @@ namespace OPS_API.Services
                 {
                     operation.MissingPerson.Name,
                     operation.MissingPerson.LastSeenInformation,
-                    OperationUrl = $"http://ragnarlaud.me/ops/{operation.Id.ToString()}"
+                    OperationUrl = $"http://ragnarlaud.me/details/{operation.Id.ToString()}"
                 });
 
                 foreach (var number in numbers)

@@ -23,7 +23,7 @@ namespace OPS_API.Services
             }
             else
             {
-                Debug.WriteLine("Messaging disabled");
+                Console.WriteLine("Messaging disabled");
             }
         }
 
@@ -31,7 +31,14 @@ namespace OPS_API.Services
         {
             if (_api == null)
             {
+                Console.WriteLine($"SendMessage({phoneNumber})");
                 return new Response(true, "Messaging disabled");
+            }
+
+            if (phoneNumber.StartsWith("+666") || phoneNumber.StartsWith("666"))
+            {
+                Console.WriteLine($"Skipping fake number {phoneNumber}");
+                return new Response(true, "Skipped fake number");
             }
 
             var message = new Omnimessage(

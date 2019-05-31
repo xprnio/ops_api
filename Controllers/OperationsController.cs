@@ -77,6 +77,12 @@ namespace OPS_API.Controllers
                 return BadRequest(new {equipmentResult.Message});
 
             var resource = _mapper.Map<Operation, OperationResource>(operation);
+
+            resource.Rescuers = resource.Rescuers
+                .OrderBy(n => DateTime.Parse(n.EstimatedTimeOfArrival))
+                .ThenBy(n => DateTime.Parse(n.AvailableUntil))
+                .ToList();
+
             return Ok(new {Operation = resource});
         }
 
@@ -120,7 +126,7 @@ namespace OPS_API.Controllers
                 {
                     Name = name,
                     Email = $"{name.Split(" ").Join(".")}@example.com",
-                    PhoneNumber = $"+372{rand.Next(58000000, 59999999)}",
+                    PhoneNumber = $"+666{rand.Next(58000000, 59999999)}",
                     Age = (ushort) rand.Next(18, 40),
                     EstimatedTimeOfArrival = DateTime.Now
                         .AddMinutes(rand.Next(0, 60)),

@@ -75,7 +75,7 @@ namespace OPS_API.Services
 
                 var numbers = await _userRepository.ListAllPhoneNumbers();
                 var message =
-                    $"Palun aita leida kadunud {operation.MissingPerson.Name}. Viimati nähtud: {operation.MissingPerson.LastSeenInformation}. http://ragnarlaud.me/details/{operation.Id.ToString()}";
+                    $"Palun aita leida kadunud {operation.MissingPerson.Name}. {operation.MissingPerson.LastSeenInformation}. http://ragnarlaud.me/details/{operation.Id.ToString()}";
 
                 foreach (var number in numbers)
                 {

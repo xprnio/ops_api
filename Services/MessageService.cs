@@ -29,9 +29,11 @@ namespace OPS_API.Services
 
         public async Task<Response> SendMessage(string phoneNumber, string text)
         {
+            Console.WriteLine($"SendMessage({phoneNumber})");
+
             if (_api == null)
             {
-                Console.WriteLine($"SendMessage({phoneNumber})");
+                Console.WriteLine("Messaging disabled");
                 return new Response(true, "Messaging disabled");
             }
 

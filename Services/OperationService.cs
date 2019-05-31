@@ -42,6 +42,10 @@ namespace OPS_API.Services
                 rescuer.Operation = opResult.Value;
 
                 var result = await _rescuerService.CreateAsync(rescuer);
+                await _messageService.SendMessage(
+                    rescuer.PhoneNumber,
+                    "Kogunemine toimub kell 17:30 aadressil Telliskivi 60a, 10412 Tallinn. https://goo.gl/maps/rS1Pm5yPvG6z9NYa7"
+                );
 
                 return !result.Success
                     ? new ValueResponse<Rescuer>($"Error joining operation {id}: {result.Message}")
@@ -70,15 +74,8 @@ namespace OPS_API.Services
                 await _work.CompleteTask();
 
                 var numbers = await _userRepository.ListAllPhoneNumbers();
-                var template = Handlebars.Compile(
-                    "Palun aita leida kadunud {{ Name }}. Viimati nähtud: {{ LastSeenInformation }}. {{ OperationURL }}"
-                );
-                var message = template(new
-                {
-                    operation.MissingPerson.Name,
-                    operation.MissingPerson.LastSeenInformation,
-                    OperationUrl = $"http://ragnarlaud.me/details/{operation.Id.ToString()}"
-                });
+                var message =
+                    $"Palun aita leida kadunud {operation.MissingPerson.Name}. Viimati nähtud: {operation.MissingPerson.LastSeenInformation}. http://ragnarlaud.me/details/{operation.Id.ToString()}";
 
                 foreach (var number in numbers)
                 {

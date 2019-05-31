@@ -46,12 +46,10 @@ namespace OPS_API.Persistence.Repositories
 
         public async Task<IEnumerable<string>> ListAllPhoneNumbers()
         {
-//            return await _context.Users
-//                .Select(u => u.PhoneNumber)
-//                .Distinct()
-//                .ToListAsync();
-
-            return new[] {"+37258072364"};
+            return await _context.Users
+                .Select(u => u.PhoneNumber)
+                .Distinct()
+                .ToListAsync();
         }
     }
 }
